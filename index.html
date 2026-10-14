@@ -1,8 +1,28 @@
 <!DOCTYPE html>
 <html>
 <body>
-<audio autoplay>
+<audio id="myAudio" preload="auto">
   <source src="https://www.myinstants.com/media/sounds/foto_btYFRHF.mp3" type="audio/mpeg">
 </audio>
+
+<script>
+  const audio = document.getElementById('myAudio');
+
+  // Предзагрузка
+  audio.load();
+
+  // Пытаемся запустить сразу (сработает, если браузер разрешает)
+  function tryPlay() {
+    audio.play().catch(() => {
+      // Если не получилось — ждём первого взаимодействия
+      document.addEventListener('click', () => audio.play(), { once: true });
+      document.addEventListener('touchstart', () => audio.play(), { once: true });
+      document.addEventListener('keydown', () => audio.play(), { once: true });
+      document.addEventListener('mousemove', () => audio.play(), { once: true });
+    });
+  }
+
+  tryPlay();
+</script>
 </body>
 </html>
